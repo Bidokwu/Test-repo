@@ -1,0 +1,54 @@
+CREATE SCHEMA brew
+CREATE TABLE brew.international_brewries (SALES_ID INT, SALES_REP VARCHAR(255), EMAILS VARCHAR(255), BRANDS VARCHAR(255), PLANT_COST INT, UNIT_PRICE INT, QUANTITY INT, COST_ INT, PROFIT INT, COUNTRIES VARCHAR(255), REGION VARCHAR(255), MONTHS VARCHAR(255),YEARS INT
+);
+SELECT * FROM brew.international_brewries
+--ANGLOPHONE (Nigeria,Ghana) FRANCOPHONE (Benin,Senegal,Togo)
+
+--1. Within the space of the last three years, what was the profit worth of the breweries,inclusive of the anglophone and the francophone territories?
+
+SELECT SUM(profit)
+FROM brew.international_brewries;
+
+--2. Compare the total profit between these two territories in order for the territory manager,Mr. Stone made a strategic decision that will aid profit maximization in 2020.
+
+SELECT SUM(profit) AS Anglophone
+FROM brew.international_brewries
+WHERE countries IN ('Nigeria', 'Ghana');
+SELECT SUM(profit) AS Francophone
+FROM brew.international_brewries
+WHERE countries IN ('Benin','Senegal','Togo');
+
+--3. Country that generated the highest profit in 2019
+
+SELECT SUM(profit) AS Highest_Profit_2019, countries, years
+FROM brew.international_brewries
+WHERE years = 2019
+GROUP BY countries, years
+ORDER BY Highest_Profit_2019 DESC;
+
+--4. Help him find the year with the highest profit.
+
+SELECT SUM(profit) AS Highest_Profit, years AS Year_Highest_Profit
+FROM brew.international_brewries
+GROUP BY years
+ORDER BY Highest_Profit DESC
+LIMIT 1;
+
+--5. Which month in the three years was the least profit generated?
+
+SELECT SUM(profit) AS Highest_Profit, years AS Year_Highest_Profit
+FROM brew.international_brewries
+GROUP BY years
+ORDER BY Highest_Profit
+LIMIT 1;
+
+--6. What was the minimum profit in the month of December 2018?
+SELECT MIN (profit), months, years
+FROM brew.international_brewries
+WHERE months = 'December'
+AND years = 2018
+GROUP BY months, years;
+
+
+
+
